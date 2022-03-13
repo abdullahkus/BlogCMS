@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
@@ -10,16 +10,18 @@ import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import Alert from '@mui/material/Alert'
+
 export default function SignIn({ setIsSignUp, setAuth }) {
+  //State
+  const [error, setError] = useState(null)
   //validate
   const validations = yup.object().shape({
     email: yup
       .string()
       .email('Lütfen email giriniz.')
       .required('Lütfen email adresinizi giriniz.'),
-    password: yup
-      .string()
-      .required('Lütfen şifrenizi giriniz.'),
+    password: yup.string().required('Lütfen şifrenizi giriniz.'),
   })
   //Auth
   const { handleSubmit, handleChange, values, errors, touched } = useFormik({
@@ -42,8 +44,12 @@ export default function SignIn({ setIsSignUp, setAuth }) {
           const parseRes = await res.json()
           localStorage.setItem('token', parseRes.token)
           setAuth(true)
+        } else {
+          const parseRes = await res.json()
+          setError(parseRes)
         }
       } catch (err) {
+        setError(err.message)
         console.error(err.message)
       }
     },
@@ -107,6 +113,11 @@ export default function SignIn({ setIsSignUp, setAuth }) {
                 </Link>
               </Grid>
             </Grid>
+            {error ? (
+              <Alert spacing={2} severity='error'>
+                {error}
+              </Alert>
+            ) : null}
           </Box>
         </Box>
       </Container>
