@@ -117,7 +117,7 @@ export default function SignUp({ setIsSignUp, setAuth }) {
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}>
-              Sign Up
+             KAYIT OL
             </Button>
           </Grid>
         </Grid>
@@ -127,7 +127,7 @@ export default function SignUp({ setIsSignUp, setAuth }) {
               style={{ cursor: 'alias' }}
               variant='body2'
               onClick={() => setIsSignUp(false)}>
-              {'Already have an account? Sign in'}
+              {'Zaten hesabınız varmı?'}
             </Link>
           </Grid>
         </Grid>

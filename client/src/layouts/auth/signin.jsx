@@ -85,7 +85,7 @@ export default function SignIn({ setIsSignUp, setAuth }) {
               name='password'
               values={values.password}
               onChange={handleChange}
-              label={touched.password ? errors.password : 'Password'}
+              label={touched.password ? errors.password : 'Şifre'}
               error={touched.password && errors.password ? true : false}
               type='password'
               id='password'
@@ -96,12 +96,12 @@ export default function SignIn({ setIsSignUp, setAuth }) {
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}>
-              Sign In
+             Giriş  
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href='#' variant='body2'>
-                  Forgot password?
+                Parolanızımı unuttunuz?
                 </Link>
               </Grid>
               <Grid item>
@@ -109,7 +109,7 @@ export default function SignIn({ setIsSignUp, setAuth }) {
                   style={{ cursor: 'alias' }}
                   variant='body2'
                   onClick={() => setIsSignUp(true)}>
-                  {"Don't have an account? Sign Up"}
+                  {"Hesabınız yok mu? "}
                 </Link>
               </Grid>
             </Grid>

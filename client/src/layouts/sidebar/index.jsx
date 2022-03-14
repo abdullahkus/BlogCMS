@@ -78,7 +78,7 @@ export default function Sidebar({ open, setOpen }) {
       </DrawerHeader>
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['Gelen kutusu', 'Yıldızlı Mesaj', 'Eposta gönder', 'Taslaklar'].map((text, index) => (
           <ListItemButton
             key={text}
             sx={{
@@ -100,7 +100,7 @@ export default function Sidebar({ open, setOpen }) {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {['Tüm postalar', 'Çöp', 'Spam'].map((text, index) => (
           <ListItemButton
             key={text}
             sx={{
