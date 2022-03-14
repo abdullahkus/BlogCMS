@@ -49,7 +49,6 @@ export default function Header({ open, setOpen, setAuth }) {
           edge='start'
           sx={{
             flexGrow: 1, 
-            
             marginRight: 5,
             ...(open && { display: 'none' }),
           }}>
