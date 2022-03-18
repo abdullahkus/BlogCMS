@@ -16,6 +16,9 @@ app.use('/auth', require('./routes/Auth'))
 //Home
 app.use('/home', require('./routes/Home'))
 
+//Home
+app.use('/general-settings', require('./routes/GeneralSettings'))
+
 //Server
 app.listen(port, async () => {
   console.log(`Server started on port ${port}`)
