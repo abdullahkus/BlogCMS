@@ -48,7 +48,7 @@ export default function Header({ open, setOpen, setAuth }) {
           onClick={handleDrawerOpen}
           edge='start'
           sx={{
-            flexGrow: 1, 
+            flexGrow: 1,
             marginRight: 5,
             ...(open && { display: 'none' }),
           }}>
@@ -58,10 +58,10 @@ export default function Header({ open, setOpen, setAuth }) {
           BlogCMS
         </Typography>
         <Mode />
-        
-        <Button variant="contained" href="#contained-buttons" onClick={() => logout()}>
-Çıkış
-</Button>
+
+        <Button variant='contained' href='#contained-buttons' onClick={() => logout()}>
+          Çıkış
+        </Button>
       </Toolbar>
     </AppBar>
   )

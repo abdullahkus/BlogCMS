@@ -3,6 +3,7 @@ const { sequelize, GeneralSettings } = require('../models')
 
 router.put('/', async (req, res) => {
   try {
+    
     //req.user has the payload
     const general = req.body
     const {

@@ -17,10 +17,7 @@ export default function SignIn({ setIsSignUp, setAuth }) {
   const [error, setError] = useState(null)
   //validate
   const validations = yup.object().shape({
-    email: yup
-      .string()
-      .email('Lütfen email giriniz.')
-      .required('Lütfen email adresinizi giriniz.'),
+    email: yup.string().email('Lütfen email giriniz.').required('Lütfen email adresinizi giriniz.'),
     password: yup.string().required('Lütfen şifrenizi giriniz.'),
   })
   //Auth
@@ -91,30 +88,23 @@ export default function SignIn({ setIsSignUp, setAuth }) {
               id='password'
               autoComplete='current-password'
             />
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              sx={{ mt: 3, mb: 2 }}>
-             Giriş  
+            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+              Giriş
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href='#' variant='body2'>
-                Parolanızımı unuttunuz?
+                  Parolanızımı unuttunuz?
                 </Link>
               </Grid>
               <Grid item>
-                <Link
-                  style={{ cursor: 'alias' }}
-                  variant='body2'
-                  onClick={() => setIsSignUp(true)}>
-                  {"Hesabınız yok mu? "}
+                <Link style={{ cursor: 'alias' }} variant='body2' onClick={() => setIsSignUp(true)}>
+                  {'Hesabınız yok mu? '}
                 </Link>
               </Grid>
             </Grid>
             {error ? (
-              <Alert spacing={2} severity='error'>
+              <Alert sx={{ mt: 2 }} spacing={2} severity='error'>
                 {error}
               </Alert>
             ) : null}

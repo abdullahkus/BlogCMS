@@ -2,6 +2,7 @@ const express = require('express')
 const { sequelize } = require('./models')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const multer  = require('multer')
 const app = express()
 const port = process.env.PORT || 4000
 require('dotenv').config()
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //Auth
 app.use('/auth', require('./routes/Auth'))
 
-//Home
+//Homes
 app.use('/home', require('./routes/Home'))
 
 //Home

@@ -132,7 +132,7 @@ export default function SignUp({ setIsSignUp, setAuth }) {
           </Grid>
         </Grid>
         {error ? (
-              <Alert spacing={2} severity='error'>
+              <Alert sx={{ mt: 2 }} spacing={2} severity='error'>
                 { error }
               </Alert>
             ) : null}
