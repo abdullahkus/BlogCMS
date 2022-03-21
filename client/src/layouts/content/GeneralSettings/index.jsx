@@ -14,12 +14,14 @@ export default function GeneralSettings() {
           display: 'flex',
           flexWrap: 'wrap',
         }}>
-        <Box style={{ width: '100%' }}>
+        
+        <Box style={{ width: '100%'}}>
           <Typography variant='h4' gutterBottom>
             Genel Ayarlar
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
+          
           <Button variant='contained' component='label'>
             <AddBoxIcon /> Logo Yükle
             <input type='file' hidden />

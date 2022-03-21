@@ -58,7 +58,10 @@ export default function Header({ open, setOpen, setAuth }) {
           BlogCMS
         </Typography>
         <Mode />
-        <Button onClick={() => logout()}>Çıkış Yap</Button>
+        
+        <Button variant="contained" href="#contained-buttons" onClick={() => logout()}>
+Çıkış
+</Button>
       </Toolbar>
     </AppBar>
   )
