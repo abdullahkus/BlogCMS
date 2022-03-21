@@ -48,16 +48,17 @@ export default function Header({ open, setOpen, setAuth }) {
           onClick={handleDrawerOpen}
           edge='start'
           sx={{
+            flexGrow: 1, 
             marginRight: 5,
             ...(open && { display: 'none' }),
           }}>
           <MenuIcon />
         </IconButton>
-        <Typography variant='h6' noWrap component='div'>
+        <Typography sx={{ flexGrow: 60 }} variant='h6' noWrap component='div'>
           BlogCMS
         </Typography>
         <Mode />
-        <Button onClick={() => logout()}>Logout</Button>
+        <Button onClick={() => logout()}>Çıkış Yap</Button>
       </Toolbar>
     </AppBar>
   )

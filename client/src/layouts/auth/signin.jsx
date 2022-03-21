@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 
@@ -10,16 +10,18 @@ import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import Alert from '@mui/material/Alert'
+
 export default function SignIn({ setIsSignUp, setAuth }) {
+  //State
+  const [error, setError] = useState(null)
   //validate
   const validations = yup.object().shape({
     email: yup
       .string()
       .email('Lütfen email giriniz.')
       .required('Lütfen email adresinizi giriniz.'),
-    password: yup
-      .string()
-      .required('Lütfen şifrenizi giriniz.'),
+    password: yup.string().required('Lütfen şifrenizi giriniz.'),
   })
   //Auth
   const { handleSubmit, handleChange, values, errors, touched } = useFormik({
@@ -42,8 +44,12 @@ export default function SignIn({ setIsSignUp, setAuth }) {
           const parseRes = await res.json()
           localStorage.setItem('token', parseRes.token)
           setAuth(true)
+        } else {
+          const parseRes = await res.json()
+          setError(parseRes)
         }
       } catch (err) {
+        setError(err.message)
         console.error(err.message)
       }
     },
@@ -79,7 +85,7 @@ export default function SignIn({ setIsSignUp, setAuth }) {
               name='password'
               values={values.password}
               onChange={handleChange}
-              label={touched.password ? errors.password : 'Password'}
+              label={touched.password ? errors.password : 'Şifre'}
               error={touched.password && errors.password ? true : false}
               type='password'
               id='password'
@@ -90,12 +96,12 @@ export default function SignIn({ setIsSignUp, setAuth }) {
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}>
-              Sign In
+             Giriş  
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link href='#' variant='body2'>
-                  Forgot password?
+                Parolanızımı unuttunuz?
                 </Link>
               </Grid>
               <Grid item>
@@ -103,10 +109,15 @@ export default function SignIn({ setIsSignUp, setAuth }) {
                   style={{ cursor: 'alias' }}
                   variant='body2'
                   onClick={() => setIsSignUp(true)}>
-                  {"Don't have an account? Sign Up"}
+                  {"Hesabınız yok mu? "}
                 </Link>
               </Grid>
             </Grid>
+            {error ? (
+              <Alert spacing={2} severity='error'>
+                {error}
+              </Alert>
+            ) : null}
           </Box>
         </Box>
       </Container>

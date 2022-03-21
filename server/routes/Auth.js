@@ -16,7 +16,7 @@ router.post('/register', validInfo, async (req, res) => {
     })
 
     if (user !== null) {
-      return res.status(401).send('User already exist')
+      return res.status(401).json('Kullanıcı zaten var')
     }
     // //3. KUllanıcı parolasını Bcrypt ile şifrele
     const saltRound = 10
@@ -34,7 +34,7 @@ router.post('/register', validInfo, async (req, res) => {
     res.json({ token })
   } catch (err) {
     console.log(err.message)
-    res.status(500).send('Server Error')
+    res.status(500).json('Server Error')
   }
 })
 
@@ -50,7 +50,7 @@ router.post('/login', validInfo, async (req, res) => {
       where: { email },
     })
     if (user === null) {
-      return res.status(401).json('Password or Email is incorrect')
+      return res.status(401).json('Şifre veya E-posta yanlış')
     }
 
     //3. check if incomming password is the same the database password
@@ -60,7 +60,7 @@ router.post('/login', validInfo, async (req, res) => {
       user.dataValues.password
     )
     if (!validPassword) {
-      return res.status(401).json('Password or Email is incorrect')
+      return res.status(401).json('Şifre veya E-posta yanlış')
     }
 
     //4. give them the jwt token
@@ -69,7 +69,7 @@ router.post('/login', validInfo, async (req, res) => {
     res.json({ token })
   } catch (err) {
     console.log(err.message)
-    res.status(500).send('Server Error')
+    res.status(500).json('Server Error')
   }
 })
 
@@ -78,7 +78,7 @@ router.get('/is-verify', authorization, async (req, res) => {
     res.json(true)
   } catch (err) {
     console.log(err.message)
-    res.status(500).send('Server Error')
+    res.status(500).json('Server Error')
   }
 })
 
