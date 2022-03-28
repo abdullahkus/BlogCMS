@@ -11,6 +11,9 @@ import Auth from '../layouts/auth'
 import Home from '../layouts/home'
 import GeneralSettings from '../layouts/content/GeneralSettings'
 import BlogSettings from '../layouts/content/BlogSettings'
+import BlogSettingsCreate from '../layouts/content/BlogSettings/create'
+import BlogSettingsEdit from '../layouts/content/BlogSettings/edit'
+
 function App() {
   //Auth
   const [isAuth, setIsAuth] = useState(true)
@@ -70,11 +73,11 @@ function App() {
           <Route
             path='/'
             exact
-            element={
-              isAuth ? <Home setAuth={setAuth} /> : <Navigate to='/auth' />
-            }>
+            element={isAuth ? <Home setAuth={setAuth} /> : <Navigate to='/auth' />}>
             <Route path='/general-settings' element={<GeneralSettings />} />
-            <Route path='/blog-settings' element= { <BlogSettings />} />
+            <Route path='/blog-settings' element={<BlogSettings />} />
+            <Route path='/blog-settings/create' element={<BlogSettingsCreate />} />
+            <Route path='/blog-settings/edit/:id' element={<BlogSettingsEdit />} />
           </Route>
           <Route
             exact

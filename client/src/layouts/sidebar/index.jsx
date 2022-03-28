@@ -11,6 +11,8 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
+import { Link } from 'react-router-dom'
+
 const drawerWidth = 240
 
 const openedMixin = (theme) => ({
@@ -69,18 +71,13 @@ export default function Sidebar({ open, setOpen }) {
     <Drawer variant='permanent' open={open}>
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'rtl' ? (
-            <ChevronRightIcon />
-          ) : (
-            <ChevronLeftIcon />
-          )}
+          {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </IconButton>
       </DrawerHeader>
       <Divider />
       <List>
-        {['Gelen kutusu', 'Yıldızlı Mesaj', 'Eposta gönder', 'Taslaklar'].map((text, index) => (
+      <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/'>
           <ListItemButton
-            key={text}
             sx={{
               minHeight: 48,
               justifyContent: open ? 'initial' : 'center',
@@ -92,34 +89,49 @@ export default function Sidebar({ open, setOpen }) {
                 mr: open ? 3 : 'auto',
                 justifyContent: 'center',
               }}>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary='Anasayfa' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
-        ))}
+        </Link>
+        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/general-settings'>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}>
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary='Site Genel Ayarları' sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </Link>
+        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/blog-settings'>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}>
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary='Blog Ayarları' sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </Link>
       </List>
       <Divider />
-      <List>
-        {['Tüm postalar', 'Çöp', 'Spam'].map((text, index) => (
-          <ListItemButton
-            key={text}
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}>
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
-              }}>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        ))}
-      </List>
     </Drawer>
   )
 }

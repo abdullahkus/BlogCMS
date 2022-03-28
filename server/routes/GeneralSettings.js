@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { sequelize, GeneralSettings } = require('../models')
 
-router.put('/', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     
     //req.user has the payload

@@ -14,10 +14,17 @@ export default function GeneralSettings() {
 
   //validate
   const validations = yup.object().shape({
-    logo: yup.string().required('Lütfen logo giriniz.'),
+    logo: yup.string().required('Lütfen Logo giriniz.'),
     favicon: yup.string().required('Lütfen favicon giriniz.'),
-    title: yup.string().min(25, "En az 25 karakter girmelisiniz.").required('Lütfen başlığı giriniz.'),
-    description: yup.string().min(100, "En az 100 karakter girmelisiniz.").max(160, "En fazla 160 karakter girmelisiniz.").required('Lütfen açıklamayı giriniz.'),
+    title: yup
+      .string()
+      .min(25, 'En az 25 karakter girmelisiniz.')
+      .required('Lütfen başlığı giriniz.'),
+    description: yup
+      .string()
+      .min(100, 'En az 100 karakter girmelisiniz.')
+      .max(160, 'En fazla 160 karakter girmelisiniz.')
+      .required('Lütfen açıklamayı giriniz.'),
     seo_title: yup.string().required('Lütfen seo başlığını giriniz.'),
     seo_description: yup.string().required('Lütfen seo açıklamasını giriniz.'),
   })
@@ -28,12 +35,11 @@ export default function GeneralSettings() {
       description: '',
       seo_title: '',
       seo_description: '',
-      logo: '',
       favicon: '',
+      logo: '',
     },
     onSubmit: async (event) => {
       try {
-        console.log(event)
         const body = {
           title: values.title,
           description: values.description,
@@ -43,7 +49,7 @@ export default function GeneralSettings() {
           favicon: values.favicon,
         }
         const res = await fetch('http://localhost:4000/general-settings', {
-          method: 'PUT',
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
         })
@@ -65,7 +71,7 @@ export default function GeneralSettings() {
     <>
       <Box
         component='form'
-        enctype="multipart/form-data"
+        enctype='multipart/form-data'
         onSubmit={handleSubmit}
         sx={{
           display: 'flex',
@@ -77,10 +83,18 @@ export default function GeneralSettings() {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
-          <Button variant='contained' component='label'>
+          <Button sx={{pt:2, pb:2}} variant='contained' component='label'>
             <AddBoxIcon /> {touched.logo ? errors.logo : 'Logo'}
-            <input type='file' name='logo' hidden values={values.logo} onChange={handleChange} />
+            <input
+              type='file'
+              name='logo'
+              hidden
+              values={values.logo}
+              onChange={handleChange}
+              multiple
+            />
           </Button>
+
           <TextField
             sx={{ mt: 2 }}
             fullWidth
@@ -105,7 +119,7 @@ export default function GeneralSettings() {
           />
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
-          <Button variant='contained' component='label'>
+          <Button sx={{pt:2, pb:2}} variant='contained' component='label'>
             <AddBoxIcon /> {touched.favicon ? errors.favicon : 'Favicon'}
             <input
               type='file'
@@ -113,6 +127,7 @@ export default function GeneralSettings() {
               hidden
               values={values.favicon}
               onChange={handleChange}
+              multiple
             />
           </Button>
           <TextField
@@ -138,7 +153,7 @@ export default function GeneralSettings() {
             error={touched.seo_description && errors.seo_description ? true : false}
           />
           <Button type='submit' sx={{ mt: 2 }} variant='contained' fullWidth>
-            Gönder
+            Güncelle
           </Button>
           {success ? (
             <Alert sx={{ mt: 2 }} spacing={2} severity='success'>
@@ -147,7 +162,6 @@ export default function GeneralSettings() {
           ) : null}
         </Box>
       </Box>
-
       {error ? (
         <Alert sx={{ mt: 2 }} spacing={2} severity='error'>
           {error}
