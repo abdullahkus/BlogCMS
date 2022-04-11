@@ -24,7 +24,7 @@ export default function Auth({ setAuth }) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            {isSignUp ? 'Sign up' : 'Sign in'}
+            {isSignUp ? '' : ''}
           </Typography>
           {isSignUp ? (
             <SignUp setIsSignUp={setIsSignUp} setAuth={setAuth} />

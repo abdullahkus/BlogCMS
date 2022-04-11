@@ -9,7 +9,7 @@ router.get('/', authorization, async (req, res) => {
     res.json(req.user)
   } catch (err) {
     console.log(err.message)
-    res.status(500).json('server error')
+    res.status(500).json('Server Error')
   }
 })
 

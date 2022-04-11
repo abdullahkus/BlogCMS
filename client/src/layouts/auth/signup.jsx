@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import TextField from '@mui/material/TextField'
@@ -6,7 +6,11 @@ import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
+import Alert from '@mui/material/Alert'
+
 export default function SignUp({ setIsSignUp, setAuth }) {
+    //State
+  const [error, setError] = useState(null)
   //validate
   const validations = yup.object().shape({
     firstName: yup.string().matches(/^[A-Za-z ]*$/, 'Lütfen sadece karakter giriniz.').required('Lütfen adınızı giriniz.'),
@@ -41,9 +45,14 @@ export default function SignUp({ setIsSignUp, setAuth }) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
         })
+        if(res.status === 200) {
         const parseRes = await res.json()
         localStorage.setItem('token', parseRes.token)
         setAuth(true)
+        } else {
+          const parseRes = await res.json()
+          setError(parseRes)
+        }
       } catch (err) {
         console.error(err.message)
       }
@@ -108,7 +117,7 @@ export default function SignUp({ setIsSignUp, setAuth }) {
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}>
-              Sign Up
+             KAYIT OL
             </Button>
           </Grid>
         </Grid>
@@ -118,10 +127,15 @@ export default function SignUp({ setIsSignUp, setAuth }) {
               style={{ cursor: 'alias' }}
               variant='body2'
               onClick={() => setIsSignUp(false)}>
-              {'Already have an account? Sign in'}
+              {'Zaten hesabınız varmı?'}
             </Link>
           </Grid>
         </Grid>
+        {error ? (
+              <Alert sx={{ mt: 2 }} spacing={2} severity='error'>
+                { error }
+              </Alert>
+            ) : null}
       </Box>
     </>
   )
