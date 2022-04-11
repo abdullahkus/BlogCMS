@@ -76,7 +76,7 @@ export default function Sidebar({ open, setOpen }) {
       </DrawerHeader>
       <Divider />
       <List>
-      <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/'>
+        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -128,6 +128,24 @@ export default function Sidebar({ open, setOpen }) {
               <InboxIcon />
             </ListItemIcon>
             <ListItemText primary='Blog Ayarları' sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </Link>
+        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/page-settings'>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}>
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary='Sayfa Ayarları' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </Link>
       </List>
