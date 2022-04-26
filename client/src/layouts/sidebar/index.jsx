@@ -9,10 +9,12 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import MUILink from '@mui/material/Link';
 import { Link } from 'react-router-dom'
-
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
+import HomeIcon from '@mui/icons-material/Home';
+import BookIcon from '@mui/icons-material/Book';
+import PagesIcon from '@mui/icons-material/Pages';
 const drawerWidth = 240
 
 const openedMixin = (theme) => ({
@@ -76,7 +78,7 @@ export default function Sidebar({ open, setOpen }) {
       </DrawerHeader>
       <Divider />
       <List>
-        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/'>
+        <MUILink component={Link} underline="none" to='/'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -89,12 +91,12 @@ export default function Sidebar({ open, setOpen }) {
                 mr: open ? 3 : 'auto',
                 justifyContent: 'center',
               }}>
-              <InboxIcon />
+              <HomeIcon />
             </ListItemIcon>
             <ListItemText primary='Anasayfa' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
-        </Link>
-        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/general-settings'>
+        </MUILink>
+        <MUILink component={Link} underline="none" to='/general-settings'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -107,12 +109,12 @@ export default function Sidebar({ open, setOpen }) {
                 mr: open ? 3 : 'auto',
                 justifyContent: 'center',
               }}>
-              <InboxIcon />
+              <DisplaySettingsIcon />
             </ListItemIcon>
             <ListItemText primary='Site Genel Ayarları' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
-        </Link>
-        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/blog-settings'>
+        </MUILink>
+        <MUILink component={Link} underline="none" to='/blog-settings'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -125,12 +127,12 @@ export default function Sidebar({ open, setOpen }) {
                 mr: open ? 3 : 'auto',
                 justifyContent: 'center',
               }}>
-              <InboxIcon />
+              <BookIcon />
             </ListItemIcon>
             <ListItemText primary='Blog Ayarları' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
-        </Link>
-        <Link style={{ textDecoration: 'none', color: '#1b1f23' }} to='/page-settings'>
+        </MUILink>
+        <MUILink component={Link} underline="none" to='/page-settings'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -143,11 +145,11 @@ export default function Sidebar({ open, setOpen }) {
                 mr: open ? 3 : 'auto',
                 justifyContent: 'center',
               }}>
-              <InboxIcon />
+              <PagesIcon />
             </ListItemIcon>
             <ListItemText primary='Sayfa Ayarları' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
-        </Link>
+        </MUILink>
       </List>
       <Divider />
     </Drawer>

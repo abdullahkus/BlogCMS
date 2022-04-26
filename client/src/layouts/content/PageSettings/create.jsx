@@ -118,7 +118,7 @@ export default function Create() {
           </Box>
         </Box>
         <Box sx={{ m: 2 }}>
-          <CKEditor
+          <CKEditor 
             editor={ClassicEditor}
             data='<p>Merhaba, Dünya.</p>'
             onChange={(event, editor) => {
