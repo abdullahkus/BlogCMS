@@ -6,7 +6,6 @@ import * as yup from 'yup'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import AddBoxIcon from '@mui/icons-material/AddBox'
 import Alert from '@mui/material/Alert'
 //Ck Editör
 import { CKEditor } from '@ckeditor/ckeditor5-react'
@@ -42,11 +41,11 @@ export default function Edit() {
   const { handleSubmit, handleChange, values, errors, touched } = useFormik({
     enableReinitialize: true,
     initialValues: {
-      page_name: '',
-      page_description: '',
-      seo_title: '',
-      seo_description: '',
-      content: '',
+      page_name: page.pageName,
+      page_description: page.pageDescription,
+      seo_title: page.seoTitle,
+      seo_description: page.seoDescription,
+      content: page.content,
     },
     onSubmit: async (event) => {
       try {
@@ -87,49 +86,60 @@ export default function Edit() {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
-          <TextField
+            <TextField
+              sx={{ mt: 2 }}
               fullWidth
-              id='filled-basic'
+              id='filled-error-helper-text'
+              label='Sayfa Adı'
               name='page_name'
-              variant='filled'
-              values={values.page_name}
               onChange={handleChange}
-              label={touched.page_name ? errors.page_name : 'Sayfa Adı'}
-              error={touched.page_name && errors.page_name ? true : false}
+              value={values.page_name}
+              error={errors.page_name}
+              helperText={errors.page_name}
+              defaultValue=' '
+              variant='filled'
             />
             <TextField
               sx={{ mt: 2 }}
               fullWidth
-              id='filled-basic'
+              id='filled-error-helper-text'
+              label='Sayfa Açıklaması'
               name='page_description'
-              variant='filled'
-              values={values.page_description}
               onChange={handleChange}
-              label={touched.page_description ? errors.page_description : 'Sayfa Açıklaması'}
-              error={touched.page_description && errors.page_description ? true : false}
+              value={values.page_description}
+              error={errors.page_description}
+              helperText={errors.page_description}
+              defaultValue=' '
+              variant='filled'
             />
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
-          <TextField
-              fullWidth
-              id='filled-basic'
-              name='seo_title'
-              variant='filled'
-              values={values.seo_title}
-              onChange={handleChange}
-              label={touched.seo_title ? errors.seo_title : 'SEO Başlık'}
-              error={touched.seo_title && errors.seo_title ? true : false}
-            />
             <TextField
               sx={{ mt: 2 }}
               fullWidth
-              id='filled-basic'
-              name='seo_description'
-              variant='filled'
-              values={values.seo_description}
+              id='filled-error-helper-text'
+              label='SEO Başlığı'
+              name='seo_title'
               onChange={handleChange}
-              label={touched.seo_description ? errors.seo_description : 'SEO Açıklaması'}
-              error={touched.seo_description && errors.seo_description ? true : false}
+              value={values.seo_title}
+              error={errors.seo_title}
+              helperText={errors.seo_title}
+              defaultValue=' '
+              variant='filled'
+            />
+
+            <TextField
+              sx={{ mt: 2 }}
+              fullWidth
+              id='filled-error-helper-text'
+              label='SEO Açıklaması'
+              name='seo_description'
+              onChange={handleChange}
+              value={values.seo_description}
+              error={errors.seo_description}
+              helperText={errors.seo_description}
+              defaultValue=' '
+              variant='filled'
             />
           </Box>
         </Box>
@@ -143,7 +153,7 @@ export default function Edit() {
             }}
           />
           <Button type='submit' sx={{ mt: 2 }} variant='contained' fullWidth>
-            Gönder
+            Güncelle
           </Button>
           {success ? (
             <Alert sx={{ mt: 2 }} spacing={2} severity='success'>

@@ -13,6 +13,9 @@ import GeneralSettings from '../layouts/content/GeneralSettings'
 import BlogSettings from '../layouts/content/BlogSettings'
 import BlogSettingsCreate from '../layouts/content/BlogSettings/create'
 import BlogSettingsEdit from '../layouts/content/BlogSettings/edit'
+import CategorySettings from '../layouts/content/CategorySettings'
+import CategorySettingsCreate from '../layouts/content/CategorySettings/create'
+import CategorySettingsEdit from '../layouts/content/CategorySettings/edit'
 import PageSettings from '../layouts/content/PageSettings'
 import PageSettingsCreate from '../layouts/content/PageSettings/create'
 import PageSettingsEdit from '../layouts/content/PageSettings/edit'
@@ -80,6 +83,9 @@ function App() {
             <Route path='/blog-settings' element={<BlogSettings />} />
             <Route path='/blog-settings/create' element={<BlogSettingsCreate />} />
             <Route path='/blog-settings/edit/:id' element={<BlogSettingsEdit />} />
+            <Route path='/category-settings' element={<CategorySettings />} />
+            <Route path='/category-settings/create' element={<CategorySettingsCreate />} />
+            <Route path='/category-settings/edit/:id' element={<CategorySettingsEdit />} />
             <Route path='/page-settings' element={<PageSettings />} />
             <Route path='/page-settings/create' element={<PageSettingsCreate />} />
             <Route path='/page-settings/edit/:id' element={<PageSettingsEdit />} />

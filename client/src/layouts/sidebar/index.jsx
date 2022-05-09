@@ -15,6 +15,7 @@ import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 import HomeIcon from '@mui/icons-material/Home';
 import BookIcon from '@mui/icons-material/Book';
 import PagesIcon from '@mui/icons-material/Pages';
+import CategoryIcon from '@mui/icons-material/Category';
 const drawerWidth = 240
 
 const openedMixin = (theme) => ({
@@ -130,6 +131,24 @@ export default function Sidebar({ open, setOpen }) {
               <BookIcon />
             </ListItemIcon>
             <ListItemText primary='Blog Ayarları' sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </MUILink>
+        <MUILink component={Link} underline="none" to='/category-settings'>
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
+            }}>
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}>
+              <CategoryIcon />
+            </ListItemIcon>
+            <ListItemText primary='Kategori Ayarları' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </MUILink>
         <MUILink component={Link} underline="none" to='/page-settings'>

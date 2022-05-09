@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { useFormik } from 'formik'
+import axios from 'axios'
 import * as yup from 'yup'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -11,6 +12,18 @@ import Alert from '@mui/material/Alert'
 export default function GeneralSettings() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
+  const [settings, setSettings] = useState([])
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/general-settings/')
+      .then(function (res) {
+        setSettings(res.data[0])
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }, [])
 
   //validate
   const validations = yup.object().shape({
@@ -30,11 +43,13 @@ export default function GeneralSettings() {
   })
   //Auth
   const { handleSubmit, handleChange, values, errors, touched } = useFormik({
+    enableReinitialize: true,
+
     initialValues: {
-      title: '',
-      description: '',
-      seo_title: '',
-      seo_description: '',
+      title: settings.title,
+      description: settings.description,
+      seo_title: settings.seo_title,
+      seo_description: settings.seo_description,
       favicon: '',
       logo: '',
     },
@@ -54,10 +69,8 @@ export default function GeneralSettings() {
           body: JSON.stringify(body),
         })
         if (res.status === 200) {
-          const parseRes = await res.json()
           setSuccess('Bilgileriniz başarıyla güncellendi.')
         } else {
-          const parseRes = await res.json()
         }
       } catch (err) {
         setError(err.message)
@@ -83,13 +96,13 @@ export default function GeneralSettings() {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
-          <Button sx={{pt:2, pb:2}} variant='contained' component='label'>
+          <Button sx={{ pt: 2, pb: 2 }} variant='contained' component='label'>
             <AddBoxIcon /> {touched.logo ? errors.logo : 'Logo'}
             <input
               type='file'
               name='logo'
               hidden
-              values={values.logo}
+              value={values.logo}
               onChange={handleChange}
               multiple
             />
@@ -98,59 +111,70 @@ export default function GeneralSettings() {
           <TextField
             sx={{ mt: 2 }}
             fullWidth
-            id='filled-basic'
+            id='filled-error-helper-text'
+            label='Başlık'
             name='title'
-            variant='filled'
-            values={values.title}
             onChange={handleChange}
-            label={touched.title ? errors.title : 'Başlık'}
-            error={touched.title && errors.title ? true : false}
+            value={values.title}
+            error={errors.title}
+            helperText={errors.title}
+            defaultValue=' '
+            variant='filled'
           />
+
           <TextField
             sx={{ mt: 2 }}
             fullWidth
-            id='filled-basic'
+            id='filled-error-helper-text'
+            label='Açıklama'
             name='description'
-            variant='filled'
-            values={values.description}
             onChange={handleChange}
-            label={touched.description ? errors.description : 'Açıklama'}
-            error={touched.description && errors.description ? true : false}
+            value={values.description}
+            error={errors.description}
+            helperText={errors.description}
+            defaultValue=' '
+            variant='filled'
           />
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
-          <Button sx={{pt:2, pb:2}} variant='contained' component='label'>
+          <Button sx={{ pt: 2, pb: 2 }} variant='contained' component='label'>
             <AddBoxIcon /> {touched.favicon ? errors.favicon : 'Favicon'}
             <input
               type='file'
               name='favicon'
               hidden
-              values={values.favicon}
+              value={values.favicon}
               onChange={handleChange}
               multiple
             />
           </Button>
+
           <TextField
             sx={{ mt: 2 }}
             fullWidth
-            id='filled-basic'
+            id='filled-error-helper-text'
+            label='SEO Başlık'
             name='seo_title'
-            variant='filled'
-            values={values.seo_title}
             onChange={handleChange}
-            label={touched.seo_title ? errors.seo_title : 'SEO Başlık'}
-            error={touched.seo_title && errors.seo_title ? true : false}
+            value={values.seo_title}
+            error={errors.seo_title}
+            helperText={errors.seo_title}
+            defaultValue=' '
+            variant='filled'
           />
+
           <TextField
             sx={{ mt: 2 }}
             fullWidth
-            id='filled-basic'
+            id='filled-error-helper-text'
+            label='SEO Açıklaması'
             name='seo_description'
-            variant='filled'
-            values={values.seo_description}
             onChange={handleChange}
-            label={touched.seo_description ? errors.seo_description : 'SEO Açıklaması'}
-            error={touched.seo_description && errors.seo_description ? true : false}
+            value={values.seo_description}
+            error={errors.seo_description}
+            helperText={errors.seo_description}
+            defaultValue=' '
+            variant='filled'
           />
           <Button type='submit' sx={{ mt: 2 }} variant='contained' fullWidth>
             Güncelle

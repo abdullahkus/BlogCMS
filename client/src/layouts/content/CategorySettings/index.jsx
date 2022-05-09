@@ -34,23 +34,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-export default function PageSettings() {
-  const [pages, setPages] = useState([])
+export default function BlogSettings() {
+  const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/page-settings/')
+      .get('http://localhost:4000/blog-settings/')
       .then(function (res) {
-        setPages(res.data)
+        setBlogs(res.data)
       })
       .catch(function (error) {
         console.log(error)
       })
-  }, [setPages])
+  }, [setBlogs])
 
-  const deletePage = (id) => {
+  const deleteBlog = (id) => {
     axios
-      .delete('http://localhost:4000/page-settings/delete/' + id)
+      .delete('http://localhost:4000/blog-settings/delete/' + id)
       .then(function (res) {
         console.log(res.data)
       })
@@ -69,12 +69,12 @@ export default function PageSettings() {
           }}>
           <Box style={{ width: '100%' }}>
             <Typography variant='h4' gutterBottom>
-              Sayfalar
+              Kategoriler
             </Typography>
           </Box>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Link style={{ textDecoration: 'none' }} to='/page-settings/create'>
+          <Link style={{ textDecoration: 'none' }} to='/blog-settings/create'>
             <Button variant='contained'>Yeni Ekle</Button>
           </Link>
         </Box>
@@ -82,32 +82,36 @@ export default function PageSettings() {
           <Table sx={{}} aria-label='customized table'>
             <TableHead>
               <TableRow>
-                <StyledTableCell>Sayfa Adı</StyledTableCell>
-                <StyledTableCell>Sayfa Açıklaması</StyledTableCell>
+                <StyledTableCell>Resim</StyledTableCell>
+                <StyledTableCell>Adı</StyledTableCell>
                 <StyledTableCell>Seo Başlık</StyledTableCell>
+                <StyledTableCell>Anahtar Kelime</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {pages.map((page) => (
-                <StyledTableRow key={page.id}>
-                  <StyledTableCell style={{ wordBreak: 'break-word' }}>{page.pageName}</StyledTableCell>
+              {blogs.map((blog) => (
+                <StyledTableRow key={blog.id}>
+                  <StyledTableCell component='th' scope='row'>
+                    {blog.image}
+                  </StyledTableCell>
+                  <StyledTableCell style={{ wordBreak: 'break-word' }}>{blog.name}</StyledTableCell>
                   <StyledTableCell style={{ wordBreak: 'break-word' }}>
-                    {page.pageDescription}
+                    {blog.seo_title}
                   </StyledTableCell>
                   <StyledTableCell style={{ wordBreak: 'break-word' }}>
-                    {page.seoTitle}
+                    {blog.keywords}
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Link style={{ textDecoration: 'none' }} to={`/page-settings/edit/${page.id}`}>
+                    <Link style={{ textDecoration: 'none' }} to={`/blog-settings/edit/${blog.id}`}>
                       <Button>
                         <EditIcon />
                       </Button>
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Button onClick={() => deletePage(page.id)}>
+                    <Button onClick={() => deleteBlog(blog.id)}>
                       <DeleteForeverIcon />
                     </Button>
                   </StyledTableCell>

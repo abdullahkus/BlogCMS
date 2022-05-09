@@ -31,6 +31,10 @@ app.use('/blog-settings', require('./routes/BlogSettings'))
 //Page Settings
 app.use('/page-settings', require('./routes/PageSettings'))
 
+//Category Settings
+app.use('/category-settings', require('./routes/CategorySettings'))
+
+
 //Server
 app.listen(port, async () => {
   console.log(`Server started on port ${port}`)

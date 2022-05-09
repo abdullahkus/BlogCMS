@@ -69,7 +69,7 @@ export default function BlogSettings() {
           }}>
           <Box style={{ width: '100%' }}>
             <Typography variant='h4' gutterBottom>
-              Yeni Blog Yazısı Oluştur
+              Bloglar
             </Typography>
           </Box>
         </Box>

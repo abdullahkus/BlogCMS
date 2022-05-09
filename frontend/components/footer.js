@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 const navigation = {
   main: [
     { name: 'About', href: '#' },
@@ -101,7 +100,7 @@ export default function Footer() {
             </a>
           ))}
         </div> */}
-        <p className='mt-8 text-center text-base text-gray-400'>
+        <p className=' text-center text-base text-gray-400'>
           &copy; 2020 Tüm Hakları Saklıdır.  Design by Abdullah KUŞ & Osman BİLİCİ
         </p>
       </div>

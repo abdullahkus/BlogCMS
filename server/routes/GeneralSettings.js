@@ -1,6 +1,18 @@
 const router = require('express').Router()
 const { sequelize, GeneralSettings } = require('../models')
 
+router.get('/', async (req, res) => {
+  try {
+    const setttings = await GeneralSettings.findAll()
+    res.json(setttings)
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json('Server Error')
+  }
+})
+
+
+
 router.post('/', async (req, res) => {
   try {
     
