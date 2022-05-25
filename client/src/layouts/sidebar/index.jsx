@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useContext } from 'react'
 import { styled, useTheme } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
@@ -9,13 +9,15 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import MUILink from '@mui/material/Link';
+import MUILink from '@mui/material/Link'
 import { Link } from 'react-router-dom'
-import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
-import HomeIcon from '@mui/icons-material/Home';
-import BookIcon from '@mui/icons-material/Book';
-import PagesIcon from '@mui/icons-material/Pages';
-import CategoryIcon from '@mui/icons-material/Category';
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings'
+import HomeIcon from '@mui/icons-material/Home'
+import BookIcon from '@mui/icons-material/Book'
+import PagesIcon from '@mui/icons-material/Pages'
+import CategoryIcon from '@mui/icons-material/Category'
+import AuthortyContext from '../../context/AuthortyContext'
+
 const drawerWidth = 240
 
 const openedMixin = (theme) => ({
@@ -66,7 +68,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function Sidebar({ open, setOpen }) {
   const theme = useTheme()
-
+  const Authorty = useContext(AuthortyContext)
   const handleDrawerClose = () => {
     setOpen(false)
   }
@@ -79,7 +81,7 @@ export default function Sidebar({ open, setOpen }) {
       </DrawerHeader>
       <Divider />
       <List>
-        <MUILink component={Link} underline="none" to='/'>
+        <MUILink component={Link} underline='none' to='/'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -97,25 +99,27 @@ export default function Sidebar({ open, setOpen }) {
             <ListItemText primary='Anasayfa' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </MUILink>
-        <MUILink component={Link} underline="none" to='/general-settings'>
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? 'initial' : 'center',
-              px: 2.5,
-            }}>
-            <ListItemIcon
+        {Authorty && (
+          <MUILink component={Link} underline='none' to='/general-settings'>
+            <ListItemButton
               sx={{
-                minWidth: 0,
-                mr: open ? 3 : 'auto',
-                justifyContent: 'center',
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
               }}>
-              <DisplaySettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary='Site Genel Ayarları' sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </MUILink>
-        <MUILink component={Link} underline="none" to='/blog-settings'>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : 'auto',
+                  justifyContent: 'center',
+                }}>
+                <DisplaySettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary='Site Genel Ayarları' sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </MUILink>
+        )}
+        <MUILink component={Link} underline='none' to='/blog-settings'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -133,7 +137,7 @@ export default function Sidebar({ open, setOpen }) {
             <ListItemText primary='Blog Ayarları' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </MUILink>
-        <MUILink component={Link} underline="none" to='/category-settings'>
+        <MUILink component={Link} underline='none' to='/category-settings'>
           <ListItemButton
             sx={{
               minHeight: 48,
@@ -151,7 +155,7 @@ export default function Sidebar({ open, setOpen }) {
             <ListItemText primary='Kategori Ayarları' sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
         </MUILink>
-        <MUILink component={Link} underline="none" to='/page-settings'>
+        <MUILink component={Link} underline='none' to='/page-settings'>
           <ListItemButton
             sx={{
               minHeight: 48,

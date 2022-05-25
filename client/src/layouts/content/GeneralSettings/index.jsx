@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Box from '@mui/material/Box'
+import AuthortyContext from '../../../context/AuthortyContext'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import * as yup from 'yup'
@@ -8,11 +9,20 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import Alert from '@mui/material/Alert'
+import { useNavigate } from 'react-router-dom'
 
 export default function GeneralSettings() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const [settings, setSettings] = useState([])
+  const navigate = useNavigate()
+
+  const Authorty = useContext(AuthortyContext)
+  useEffect(() => {
+    if (!Authorty) {
+      navigate('/')
+    }
+  },[Authorty, navigate])
 
   useEffect(() => {
     axios

@@ -7,7 +7,13 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import AddBoxIcon from '@mui/icons-material/AddBox'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 import Alert from '@mui/material/Alert'
+import { useNavigate } from 'react-router-dom'
+
 //Ck Editör
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -17,26 +23,42 @@ export default function Edit() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const [blog, setBlog] = useState([])
+  const [categories, setCategories] = useState([])
+  const [category, setCategory] = useState(null)
+
   let params = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
       .get('http://localhost:4000/blog-settings/' + params.id)
       .then(function (res) {
         setBlog(res.data)
+        setCategory(res.data.category)
       })
       .catch(function (error) {
         console.log(error)
       })
-  }, [params.id])
+  })
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/category-settings/')
+      .then(function (res) {
+        setCategories(res.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  })
 
   //validate
   const validations = yup.object().shape({
     image: yup.string().required('Lütfen Resim giriniz.'),
     keywords: yup.string().required('Lütfen Anahtar Kelime giriniz.'),
+    category: yup.number().required('Lütfen Kategori giriniz.'),
     name: yup
       .string()
-      .min(25, 'En az 25 karakter girmelisiniz.')
       .required('Lütfen başlığı giriniz.'),
     content: yup.string().required('Lütfen içerik giriniz.'),
     seo_title: yup.string().required('Lütfen seo başlığını giriniz.'),
@@ -48,6 +70,7 @@ export default function Edit() {
     initialValues: {
       name: blog.name,
       content: blog.content,
+      category: blog.category,
       seo_title: blog.seo_title,
       seo_description: blog.seo_description,
       keywords: blog.keywords,
@@ -58,6 +81,7 @@ export default function Edit() {
         const body = {
           name: values.name,
           content: values.content,
+          category: values.category,
           seo_title: values.seo_title,
           seo_description: values.seo_description,
           image: values.image,
@@ -70,6 +94,7 @@ export default function Edit() {
         })
         if (res.status === 200) {
           setSuccess('Blog yazısı başarıyla güncellendi.')
+          navigate('/blog-settings')
         }
       } catch (err) {
         setError(err.message)
@@ -117,6 +142,40 @@ export default function Edit() {
               defaultValue=' '
               variant='filled'
             />
+            {/* <FormControl variant='filled' sx={{ mt: 2 }}>
+              <InputLabel id='demo-simple-select-filled-label'>Kategori</InputLabel>
+              <Select
+                labelId='demo-simple-select-filled-label'
+                id='demo-simple-select-filled'
+                name='category'
+                value={values.category}
+                error={errors.category}
+                selectedValue={blog.category}
+                onChange={handleChange}>
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl> */}
+            <FormControl variant='filled' sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id='demo-simple-select-filled-label'>Kategori</InputLabel>
+              <Select
+                labelId='demo-simple-select-filled-label'
+                id='demo-simple-select-filled'
+                value={category}
+                onChange={handleChange}>
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+                {/* <MenuItem value={1}>Ten</MenuItem>
+                <MenuItem value={2}>Twenty</MenuItem>
+                <MenuItem value={3}>Thirty</MenuItem> */}
+              </Select>
+            </FormControl>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
             <TextField
@@ -142,7 +201,7 @@ export default function Edit() {
               value={values.seo_description}
               error={errors.seo_description}
               helperText={errors.seo_description}
-              defaultValue=" "
+              defaultValue=' '
               variant='filled'
             />
             <TextField

@@ -34,6 +34,14 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: 'Name must not be empty' },
         },
       },
+      authority: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: { msg: 'Authority is required' },
+          notEmpty: { msg: 'Authority must not be empty' },
+        },
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,

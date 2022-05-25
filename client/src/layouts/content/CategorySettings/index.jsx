@@ -34,25 +34,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-export default function BlogSettings() {
-  const [blogs, setBlogs] = useState([])
+export default function CategorySettings() {
+  const [categorys, setCategories] = useState([])
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/blog-settings/')
+      .get('http://localhost:4000/category-settings/')
       .then(function (res) {
-        setBlogs(res.data)
+        setCategories(res.data)
       })
       .catch(function (error) {
         console.log(error)
       })
-  }, [setBlogs])
+  }, [setCategories])
 
-  const deleteBlog = (id) => {
+  const deleteCategory = (id) => {
     axios
-      .delete('http://localhost:4000/blog-settings/delete/' + id)
+      .delete('http://localhost:4000/category-settings/delete/' + id)
       .then(function (res) {
-        console.log(res.data)
+        setCategories(categorys.filter((category) => category._id === id))
       })
       .catch(function (error) {
         console.log(error)
@@ -74,7 +74,7 @@ export default function BlogSettings() {
           </Box>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Link style={{ textDecoration: 'none' }} to='/blog-settings/create'>
+          <Link style={{ textDecoration: 'none' }} to='/category-settings/create'>
             <Button variant='contained'>Yeni Ekle</Button>
           </Link>
         </Box>
@@ -82,36 +82,32 @@ export default function BlogSettings() {
           <Table sx={{}} aria-label='customized table'>
             <TableHead>
               <TableRow>
-                <StyledTableCell>Resim</StyledTableCell>
                 <StyledTableCell>Adı</StyledTableCell>
-                <StyledTableCell>Seo Başlık</StyledTableCell>
-                <StyledTableCell>Anahtar Kelime</StyledTableCell>
+                <StyledTableCell>Title</StyledTableCell>
+                <StyledTableCell>SEO Description</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {blogs.map((blog) => (
-                <StyledTableRow key={blog.id}>
+              {categorys.map((category) => (
+                <StyledTableRow key={category.id}>
                   <StyledTableCell component='th' scope='row'>
-                    {blog.image}
+                    {category.name}
                   </StyledTableCell>
-                  <StyledTableCell style={{ wordBreak: 'break-word' }}>{blog.name}</StyledTableCell>
+                  <StyledTableCell style={{ wordBreak: 'break-word' }}>{category.title}</StyledTableCell>
                   <StyledTableCell style={{ wordBreak: 'break-word' }}>
-                    {blog.seo_title}
-                  </StyledTableCell>
-                  <StyledTableCell style={{ wordBreak: 'break-word' }}>
-                    {blog.keywords}
+                    {category.seo_description}
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Link style={{ textDecoration: 'none' }} to={`/blog-settings/edit/${blog.id}`}>
+                    <Link style={{ textDecoration: 'none' }} to={`/category-settings/edit/${category.id}`}>
                       <Button>
                         <EditIcon />
                       </Button>
                     </Link>
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Button onClick={() => deleteBlog(blog.id)}>
+                    <Button onClick={() => deleteCategory(category.id)}>
                       <DeleteForeverIcon />
                     </Button>
                   </StyledTableCell>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -12,11 +12,13 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import axios from 'axios'
 
+
 export default function Edit() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const [page, setPage] = useState([])
   let params = useParams()
+  let navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -63,6 +65,7 @@ export default function Edit() {
         })
         if (res.status === 200) {
           setSuccess('Sayfa başarıyla güncellendi.')
+          navigate('/page-settings')
         }
       } catch (err) {
         setError(err.message)

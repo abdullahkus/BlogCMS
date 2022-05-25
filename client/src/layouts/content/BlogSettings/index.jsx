@@ -52,7 +52,7 @@ export default function BlogSettings() {
     axios
       .delete('http://localhost:4000/blog-settings/delete/' + id)
       .then(function (res) {
-        console.log(res.data)
+        setBlogs(blogs.filter((blog) => blog._id === id))
       })
       .catch(function (error) {
         console.log(error)

@@ -101,7 +101,7 @@ export default function Footer() {
           ))}
         </div> */}
         <p className=' text-center text-base text-gray-400'>
-          &copy; 2020 Tüm Hakları Saklıdır.  Design by Abdullah KUŞ & Osman BİLİCİ
+          &copy; 2022 Tüm Hakları Saklıdır.  Design by Abdullah KUŞ
         </p>
       </div>
     </footer>

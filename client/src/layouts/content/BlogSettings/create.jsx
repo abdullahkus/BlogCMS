@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -6,13 +6,35 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import AddBoxIcon from '@mui/icons-material/AddBox'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 import Alert from '@mui/material/Alert'
+import { useNavigate } from 'react-router-dom'
 //Ck Editör
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+//axios
+import axios from 'axios'
+
+
 export default function Create() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
+  const [categories, setCategories] = useState([])
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/category-settings/')
+      .then(function (res) {
+        setCategories(res.data)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  })
 
   //validate
   const validations = yup.object().shape({
@@ -20,17 +42,17 @@ export default function Create() {
     keywords: yup.string().required('Lütfen Anahtar Kelime giriniz.'),
     name: yup
       .string()
-      .min(25, 'En az 25 karakter girmelisiniz.')
       .required('Lütfen başlığı giriniz.'),
     content: yup.string().required('Lütfen içerik giriniz.'),
     seo_title: yup.string().required('Lütfen seo başlığını giriniz.'),
     seo_description: yup.string().required('Lütfen seo açıklamasını giriniz.'),
   })
   //Auth
-  const { handleSubmit, handleChange, values, errors, touched } = useFormik({
+  const { handleSubmit, handleChange, values, errors, touched, setFieldValue } = useFormik({
     initialValues: {
       name: '',
       content: '',
+      category: '',
       seo_title: '',
       seo_description: '',
       keywords: '',
@@ -41,21 +63,22 @@ export default function Create() {
         const body = {
           name: values.name,
           content: values.content,
+          category: values.category,
           seo_title: values.seo_title,
           seo_description: values.seo_description,
           image: values.image,
           keywords: values.keywords,
         }
+        console.log(body)
         const res = await fetch('http://localhost:4000/blog-settings/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
         })
         if (res.status === 200) {
-          const parseRes = await res.json()
           setSuccess('Blog yazısı başarıyla eklendi.')
+          navigate('/blog-settings')
         } else {
-          const parseRes = await res.json()
         }
       } catch (err) {
         setError(err.message)
@@ -86,10 +109,23 @@ export default function Create() {
                 name='image'
                 hidden
                 values={values.image}
+                accept='image/*'
                 onChange={handleChange}
                 multiple
               />
             </Button>
+            {/* <Button sx={{ pt: 2, pb: 2 }} variant='contained' component='label'>
+              <AddBoxIcon /> {touched.image ? errors.image : 'Resim'}
+              <input
+                type='file'
+                name='image'
+                hidden
+                values={values.image}
+                accept='image/*'
+                onChange={(event) => setFieldValue("image", event.target.files[0])}
+                multiple
+              />
+            </Button> */}
 
             <TextField
               sx={{ mt: 2 }}
@@ -104,6 +140,20 @@ export default function Create() {
               defaultValue=' '
               variant='filled'
             />
+            <FormControl variant='filled' sx={{ mt: 2 }}>
+              <InputLabel id='demo-simple-select-filled-label'>Kategori</InputLabel>
+              <Select
+                labelId='demo-simple-select-filled-label'
+                id='demo-simple-select-filled'
+                name='category'
+                value={values.category}
+                error={errors.name}
+                onChange={handleChange}>
+                {categories.map((category) => (
+                  <MenuItem value={category.id}>{category.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
             <TextField
@@ -137,7 +187,7 @@ export default function Create() {
               sx={{ mt: 2 }}
               fullWidth
               id='filled-error-helper-text'
-              label='SEO Başlık'
+              label='Anahtar Kelime'
               name='keywords'
               onChange={handleChange}
               value={values.keywords}

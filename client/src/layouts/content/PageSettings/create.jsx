@@ -6,12 +6,17 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Alert from '@mui/material/Alert'
+//React Router Dom
+import { useNavigate } from 'react-router-dom'
 //Ck Editör
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
+
 export default function Create() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
+  const navigate = useNavigate();
 
   //validate
   const validations = yup.object().shape({
@@ -21,7 +26,7 @@ export default function Create() {
     seo_title: yup.string().required('Lütfen seo başlığını giriniz.'),
     seo_description: yup.string().required('Lütfen seo açıklamasını giriniz.'),
   })
-  const { handleSubmit, handleChange, values, errors, touched } = useFormik({
+  const { handleSubmit, handleChange, values, errors } = useFormik({
     initialValues: {
       page_name: '',
       page_description: '',
@@ -44,10 +49,9 @@ export default function Create() {
           body: JSON.stringify(body),
         })
         if (res.status === 200) {
-          const parseRes = await res.json()
           setSuccess('Blog yazısı başarıyla eklendi.')
+          navigate('/page-settings')
         } else {
-          const parseRes = await res.json()
         }
       } catch (err) {
         setError(err.message)

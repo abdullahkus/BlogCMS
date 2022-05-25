@@ -62,7 +62,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function BlogOne() {
+export default function BlogOne({post}) {
   return (
     <div className='bg-white pt-16 px-4 sm:px-6  lg:pb-28 lg:px-8'>
       <div className='relative max-w-lg mx-auto divide-y-2 divide-gray-200 lg:max-w-7xl'>
@@ -83,10 +83,4 @@ export default function BlogOne() {
     </div>
   )
 }
-{
-  /* {posts.map((post) => (
-              <div key={post.title}>
-                
-              </div>
-            ))} */
-}
+

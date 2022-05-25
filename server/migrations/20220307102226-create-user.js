@@ -21,6 +21,10 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      authority : {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,

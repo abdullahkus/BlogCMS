@@ -4,6 +4,8 @@ import { ThemeProvider } from '@mui/material/styles'
 import { Routes, Route, Navigate } from 'react-router-dom'
 //themeContext
 import ThemeContext from '../context/ThemeContext'
+import AuthortyContext from '../context/AuthortyContext'
+
 import { light } from '../themes/light'
 import { dark } from '../themes/dark'
 // Component
@@ -19,9 +21,13 @@ import CategorySettingsEdit from '../layouts/content/CategorySettings/edit'
 import PageSettings from '../layouts/content/PageSettings'
 import PageSettingsCreate from '../layouts/content/PageSettings/create'
 import PageSettingsEdit from '../layouts/content/PageSettings/edit'
+
+
 function App() {
   //Auth
   const [isAuth, setIsAuth] = useState(true)
+  const [isAuthorty, setIsAuthorty] = useState(false)
+
   const setAuth = (boolean) => {
     setIsAuth(boolean)
   }
@@ -45,6 +51,21 @@ function App() {
       console.error(err.message)
     }
   }
+
+  //Yekti
+  useEffect(() => {
+    try {
+      const res = fetch('http://localhost:4000/auth/membership-verify', {
+        METHOD: 'GET',
+        headers: { token: localStorage.getItem('token') },
+      })
+      if (res === 1) {
+        setIsAuthorty(true)
+      }
+    } catch (err) {
+      console.error(err.message)
+    }
+  },[])
 
   //Theme Mode
   const [theme, setTheme] = useState(light)
@@ -73,31 +94,32 @@ function App() {
 
   return (
     <ThemeContext.Provider value={themeMode}>
-      <ThemeProvider theme={theme}>
-        <Routes>
-          <Route
-            path='/'
-            exact
-            element={isAuth ? <Home setAuth={setAuth} /> : <Navigate to='/auth' />}>
-            <Route path='/general-settings' element={<GeneralSettings />} />
-            <Route path='/blog-settings' element={<BlogSettings />} />
-            <Route path='/blog-settings/create' element={<BlogSettingsCreate />} />
-            <Route path='/blog-settings/edit/:id' element={<BlogSettingsEdit />} />
-            <Route path='/category-settings' element={<CategorySettings />} />
-            <Route path='/category-settings/create' element={<CategorySettingsCreate />} />
-            <Route path='/category-settings/edit/:id' element={<CategorySettingsEdit />} />
-            <Route path='/page-settings' element={<PageSettings />} />
-            <Route path='/page-settings/create' element={<PageSettingsCreate />} />
-            <Route path='/page-settings/edit/:id' element={<PageSettingsEdit />} />
-
-          </Route>
-          <Route
-            exact
-            path='auth'
-            element={!isAuth ? <Auth setAuth={setAuth} /> : <Navigate to='/' />}
-          />
-        </Routes>
-      </ThemeProvider>
+      <AuthortyContext.Provider value={isAuthorty}>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route
+              path='/'
+              exact
+              element={isAuth ? <Home setAuth={setAuth} /> : <Navigate to='/auth' />}>
+              <Route path='/general-settings' element={<GeneralSettings />} />
+              <Route path='/blog-settings' element={<BlogSettings />} />
+              <Route path='/blog-settings/create' element={<BlogSettingsCreate />} />
+              <Route path='/blog-settings/edit/:id' element={<BlogSettingsEdit />} />
+              <Route path='/category-settings' element={<CategorySettings />} />
+              <Route path='/category-settings/create' element={<CategorySettingsCreate />} />
+              <Route path='/category-settings/edit/:id' element={<CategorySettingsEdit />} />
+              <Route path='/page-settings' element={<PageSettings />} />
+              <Route path='/page-settings/create' element={<PageSettingsCreate />} />
+              <Route path='/page-settings/edit/:id' element={<PageSettingsEdit />} />
+            </Route>
+            <Route
+              exact
+              path='auth'
+              element={!isAuth ? <Auth setAuth={setAuth} /> : <Navigate to='/' />}
+            />
+          </Routes>
+        </ThemeProvider>
+      </AuthortyContext.Provider>
     </ThemeContext.Provider>
   )
 }

@@ -16,6 +16,10 @@ module.exports = {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      category: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       image: {
         type: DataTypes.STRING,
         allowNull: false,

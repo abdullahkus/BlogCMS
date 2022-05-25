@@ -1,3 +1,5 @@
+const jwt_decode = require('jwt-decode')
+
 const router = require('express').Router()
 const { sequelize, User } = require('../models')
 const validInfo = require('../middleware/validInfo')
@@ -9,7 +11,7 @@ const authorization = require('../middleware/authorizations')
 router.post('/register', validInfo, async (req, res) => {
   try {
     // 1. req.body verisini çek (firstName, lastName, email, password)
-    const { firstName, lastName, email, password } = req.body
+    const { firstName, lastName, authority, email, password } = req.body
     // 2. kullanıcnın var olup olmadığının kontrolünü yap (varsa hata dönder)
     const user = await User.findOne({
       where: { email },
@@ -26,6 +28,7 @@ router.post('/register', validInfo, async (req, res) => {
     const newUser = await User.create({
       firstName,
       lastName,
+      authority,
       email,
       password: bcryptPassword,
     })
@@ -76,6 +79,25 @@ router.post('/login', validInfo, async (req, res) => {
 router.get('/is-verify', authorization, async (req, res) => {
   try {
     res.json(true)
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json('Server Error')
+  }
+})
+
+router.get('/membership-verify', async (req, res) => {
+  try {
+    const jwtToken = req.header('token')
+    const user_id = jwt_decode(jwtToken).user
+    // console.log(user_id)
+    const user = await User.findOne({
+      where: { id: user_id },
+    })
+    if (user.authority === 1) {
+      res.json(true)
+    } else {
+      res.json(false)
+    }
   } catch (err) {
     console.log(err.message)
     res.status(500).json('Server Error')

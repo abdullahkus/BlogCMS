@@ -14,10 +14,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id)
-    const post = await CategorySettings.findOne({
+    const category = await CategorySettings.findOne({
       where: { id },
     })
-    res.json(post)
+    res.json(category)
   } catch (err) {
     console.log(err.message)
     res.status(500).json('Server Error')
@@ -44,20 +44,19 @@ router.post('/create', async (req, res) => {
 
 router.put('/edit/:id', async (req, res) => {
   try {
-    const blog = req.body
-    const { name, content, image, keywords, seo_title, seo_description } = blog
-    await BlogSettings.update(
+    const category = req.body
+    const { name, title, description, seo_title, seo_description } = category
+    await CategorySettings.update(
       {
         name,
-        content,
-        image,
-        keywords,
+        title,
+        description,
         seo_title,
         seo_description,
       },
       { where: { id: req.params.id } }
     )
-    res.json({ blog })
+    res.json({ category })
   } catch (err) {
     console.log(err.message)
     res.status(500).json('Server Error')
@@ -66,7 +65,7 @@ router.put('/edit/:id', async (req, res) => {
 
 router.delete('/delete/:id', async (req, res) => {
   try {
-    await BlogSettings.destroy({
+    await CategorySettings.destroy({
       where: {
         id: req.params.id,
       },

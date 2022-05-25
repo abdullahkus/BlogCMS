@@ -1,6 +1,5 @@
 import BlogOne from '../components/blog/blogOne'
 import BlogTwo from '../components/blog/blogTwo'
-
 export default function Home() {
   return (
     <>

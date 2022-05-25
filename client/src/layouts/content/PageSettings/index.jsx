@@ -52,7 +52,7 @@ export default function PageSettings() {
     axios
       .delete('http://localhost:4000/page-settings/delete/' + id)
       .then(function (res) {
-        console.log(res.data)
+        setPages(pages.filter((page) => page._id === id))
       })
       .catch(function (error) {
         console.log(error)

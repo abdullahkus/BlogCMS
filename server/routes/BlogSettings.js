@@ -24,13 +24,27 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.get('/category/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id)
+    const post = await BlogSettings.findAll({
+      where: { category: id },
+    })
+    res.json(post)
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json('Server Error')
+  }
+})
+
 router.post('/create', async (req, res) => {
   try {
     const blog = req.body
-    const { name, content, image, keywords, seo_title, seo_description } = blog
+    const { name, content, category, image, keywords, seo_title, seo_description } = blog
     await BlogSettings.create({
       name,
       content,
+      category,
       image,
       keywords,
       seo_title,
@@ -51,6 +65,7 @@ router.put('/edit/:id', async (req, res) => {
       {
         name,
         content,
+        category,
         image,
         keywords,
         seo_title,
