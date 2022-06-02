@@ -11,7 +11,7 @@ const authorization = require('../middleware/authorizations')
 router.post('/register', validInfo, async (req, res) => {
   try {
     // 1. req.body verisini çek (firstName, lastName, email, password)
-    const { firstName, lastName, authority, email, password } = req.body
+    const { firstName, lastName,  email, password } = req.body
     // 2. kullanıcnın var olup olmadığının kontrolünü yap (varsa hata dönder)
     const user = await User.findOne({
       where: { email },
@@ -25,16 +25,32 @@ router.post('/register', validInfo, async (req, res) => {
     const salt = await bcrypt.genSalt(saltRound)
     const bcryptPassword = await bcrypt.hash(password, salt)
     // // //4. veritabanına ekleyin
-    const newUser = await User.create({
-      firstName,
-      lastName,
-      authority,
-      email,
-      password: bcryptPassword,
-    })
-    // //5. jwt token oluştur.
-    const token = jwtGenerator(newUser.user_id)
-    res.json({ token })
+    const haveUser = await User.findOne()
+    if(haveUser){
+      const newUser = await User.create({
+        firstName,
+        lastName,
+        authority: 0,
+        email,
+        password: bcryptPassword,
+      })
+      // //5. jwt token oluştur.
+      const token = jwtGenerator(newUser.user_id)
+      res.json({ token })
+    }
+    else{
+      const newUser = await User.create({
+        firstName,
+        lastName,
+        authority: 1,
+        email,
+        password: bcryptPassword,
+      })
+      // //5. jwt token oluştur.
+      const token = jwtGenerator(newUser.user_id)
+      res.json({ token })
+    }
+
   } catch (err) {
     console.log(err.message)
     res.status(500).json('Server Error')

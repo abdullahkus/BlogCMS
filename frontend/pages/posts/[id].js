@@ -1,13 +1,20 @@
 import Breadcrumbs from "../../components/breadcrumbs";
+import Head from "next/head";
 
 export default function PostDetails({ post, category }) {
   return (
     <>
       <div className="relative py-16 bg-white overflow-hidden">
+        <Head>
+          <title>{post.name}</title>
+          <meta property="og:title" content={post.seo_title} />
+          <meta property="og:description" content={post.seo_description} />
+          <meta property="article:tag" content={post.keywords} />
+        </Head>
         <div className=" max-w-7xl mx-auto px-2 sm:px-6 lg:px-8relative px-4 sm:px-6 lg:px-8">
           <div className="text-lg max-w-prose mx-auto">
             <h1>
-              <a href={"/category/"+ category.id}>
+              <a href={"/category/" + category.id}>
                 <span className="block text-base text-center text-indigo-600 font-semibold tracking-wide uppercase">
                   {category.name}
                 </span>

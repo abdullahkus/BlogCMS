@@ -23,7 +23,6 @@ module.exports = {
       },
       authority : {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,

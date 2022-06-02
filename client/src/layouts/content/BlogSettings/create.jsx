@@ -10,6 +10,8 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import Alert from '@mui/material/Alert'
 import { useNavigate } from 'react-router-dom'
 //Ck Editör
@@ -17,7 +19,6 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 //axios
 import axios from 'axios'
-
 
 export default function Create() {
   const [error, setError] = useState(null)
@@ -40,9 +41,7 @@ export default function Create() {
   const validations = yup.object().shape({
     image: yup.string().required('Lütfen Resim giriniz.'),
     keywords: yup.string().required('Lütfen Anahtar Kelime giriniz.'),
-    name: yup
-      .string()
-      .required('Lütfen başlığı giriniz.'),
+    name: yup.string().required('Lütfen başlığı giriniz.'),
     content: yup.string().required('Lütfen içerik giriniz.'),
     seo_title: yup.string().required('Lütfen seo başlığını giriniz.'),
     seo_description: yup.string().required('Lütfen seo açıklamasını giriniz.'),
@@ -53,6 +52,7 @@ export default function Create() {
       name: '',
       content: '',
       category: '',
+      favorites: false,
       seo_title: '',
       seo_description: '',
       keywords: '',
@@ -64,12 +64,12 @@ export default function Create() {
           name: values.name,
           content: values.content,
           category: values.category,
+          favorites: values.favorites,
           seo_title: values.seo_title,
           seo_description: values.seo_description,
           image: values.image,
           keywords: values.keywords,
         }
-        console.log(body)
         const res = await fetch('http://localhost:4000/blog-settings/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -154,6 +154,10 @@ export default function Create() {
                 ))}
               </Select>
             </FormControl>
+            <FormControlLabel
+              control={<Checkbox value={values.favorites} name="favorites" onChange={handleChange} />}
+              label='Favorilere Ekle'
+            />
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, m: 2 }}>
             <TextField

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useContext } from 'react'
 import { styled } from '@mui/material/styles'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 
 import MenuIcon from '@mui/icons-material/Menu'
+import SetAuthortyContext from '../../context/SetAuthortyContext'
 
 import Mode from './mode'
 const drawerWidth = 240
@@ -30,6 +31,8 @@ const AppBar = styled(MuiAppBar, {
 }))
 
 export default function Header({ open, setOpen, setAuth }) {
+  const Authorty = useContext(SetAuthortyContext)
+
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -37,6 +40,7 @@ export default function Header({ open, setOpen, setAuth }) {
   const logout = () => {
     localStorage.removeItem('token')
     setAuth(false)
+    Authorty(false)
   }
 
   return (

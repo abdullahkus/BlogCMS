@@ -1,9 +1,15 @@
 import Breadcrumbs from "../../components/breadcrumbs";
+import Head from "next/head";
 
 export default function CategoryDetails({ posts, category }) {
   return (
     <>
       <div className="relative py-16 bg-white overflow-hidden">
+        <Head>
+          <title>{category.title}</title>
+          <meta property="og:title" content={category.seo_title} />
+          <meta property="og:description" content={category.seo_description} />
+        </Head>
         <div className=" max-w-7xl mx-auto px-2 sm:px-6 lg:px-8relative px-4 sm:px-6 lg:px-8">
           <div className="text-lg max-w-prose mx-auto">
             <h1>
@@ -36,16 +42,19 @@ export default function CategoryDetails({ posts, category }) {
                     {post.category.name}
                   </a>
                 </p> */}
-                      <a href={"http://localhost:3000/posts/"+ post.id} className='block mt-2'>
-                      <p className="text-xl font-semibold text-gray-900">
-                        {post.name}
-                      </p>
-                      <p
-                        className="mt-3 text-base text-gray-500"
-                        dangerouslySetInnerHTML={{
-                          __html: post.seo_description,
-                        }}
-                      ></p>
+                      <a
+                        href={"http://localhost:3000/posts/" + post.id}
+                        className="block mt-2"
+                      >
+                        <p className="text-xl font-semibold text-gray-900">
+                          {post.name}
+                        </p>
+                        <p
+                          className="mt-3 text-base text-gray-500"
+                          dangerouslySetInnerHTML={{
+                            __html: post.seo_description,
+                          }}
+                        ></p>
                       </a>
                     </div>
                     {/* <div className='mt-6 flex items-center'>
@@ -88,7 +97,10 @@ export async function getServerSideProps(context) {
     `http://localhost:4000/blog-settings/category/${context.params.id}`
   );
   const posts = await res.json();
-  const resTwo = await fetch(`http://localhost:4000/category-settings/${posts.category}`)
-  const category = await resTwo.json()
+  const resTwo = await fetch(
+    `http://localhost:4000/category-settings/${posts[0].category}`
+  );
+
+  const category = await resTwo.json();
   return { props: { posts, category } };
 }

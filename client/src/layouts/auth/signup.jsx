@@ -37,7 +37,6 @@ export default function SignUp({ setIsSignUp, setAuth }) {
         const body = {
           firstName: values.firstName,
           lastName: values.lastName,
-          authority: 0,
           email: values.email,
           password: values.password,
         }

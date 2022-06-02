@@ -56,10 +56,10 @@ export default function GeneralSettings() {
     enableReinitialize: true,
 
     initialValues: {
-      title: settings.title,
-      description: settings.description,
-      seo_title: settings.seo_title,
-      seo_description: settings.seo_description,
+      title: settings ? settings.title : '',
+      description: settings ? settings.description : '',
+      seo_title: settings ? settings.seo_title : '',
+      seo_description: settings ? settings.seo_description : '',
       favicon: '',
       logo: '',
     },

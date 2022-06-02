@@ -11,6 +11,19 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/favorite', async (req, res) => {
+  try {
+    const blog = await BlogSettings.findAll({
+      limit: 5,
+      where: { favorites: true }
+    })
+    res.json(blog)
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json('Server Error')
+  }
+})
+
 router.get('/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id)
@@ -37,15 +50,27 @@ router.get('/category/:id', async (req, res) => {
   }
 })
 
+
+
 router.post('/create', async (req, res) => {
   try {
     const blog = req.body
-    const { name, content, category, image, keywords, seo_title, seo_description } = blog
+    const {
+      name,
+      content,
+      category,
+      favorites,
+      image,
+      keywords,
+      seo_title,
+      seo_description,
+    } = blog
     await BlogSettings.create({
       name,
       content,
       category,
       image,
+      favorites,
       keywords,
       seo_title,
       seo_description,
@@ -60,13 +85,22 @@ router.post('/create', async (req, res) => {
 router.put('/edit/:id', async (req, res) => {
   try {
     const blog = req.body
-    const { name, content, image, keywords, seo_title, seo_description } = blog
+    const {
+      name,
+      content,
+      image,
+      favorites,
+      keywords,
+      seo_title,
+      seo_description,
+    } = blog
     await BlogSettings.update(
       {
         name,
         content,
         category,
         image,
+        favorites,
         keywords,
         seo_title,
         seo_description,

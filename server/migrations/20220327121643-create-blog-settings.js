@@ -20,6 +20,10 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      favorites: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
       image: {
         type: DataTypes.STRING,
         allowNull: false,
